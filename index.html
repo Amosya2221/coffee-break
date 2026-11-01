@@ -143,7 +143,7 @@ else if(b.dataset.s){var p=S.split(";")[b.dataset.s].split("|");add(p[1],p[2])}
 else if(b.dataset.m){var m=M[b.dataset.m],s=b.parentNode.querySelector("select");add(m[1]+(s?" ("+s.options[s.selectedIndex].text.split(" — ")[0]+")":""),s?s.value:m[2].split("/")[0])}
 else if(b.dataset.d){var k=b.dataset.k;cart[k].q+=+b.dataset.d;if(cart[k].q<1)delete cart[k];upd();lines()}});
 function lines(){var t=upd()[1],h="",txt="Здравствуйте! Хочу заказать:\n";for(var k in cart){var c=cart[k];h+='<div class="ln"><span>'+c.name+'</span><span class="q"><button data-d="-1" data-k="'+k+'">−</button> '+c.q+' <button data-d="1" data-k="'+k+'">+</button></span><b>'+fmt(c.q*c.price)+'</b></div>';txt+="• "+c.name+" × "+c.q+"\n"}
-document.getElementById("lines").innerHTML=h||"<p>Корзина пока пуста.</p>";document.getElementById("total").textContent="Итого: "+fmt(t);txt+="Итого: "+fmt(t);document.getElementById("wa").href="https://wa.me/77055552549?text="+encodeURIComponent(txt)}
+document.getElementById("lines").innerHTML=h||"<p>Корзина пока пуста.</p>";document.getElementById("total").textContent="Итого: "+fmt(t);txt+="Итого: "+fmt(t);document.getElementById("wa").href="https://wa.me/77476710312?text="+encodeURIComponent(txt)}
 document.getElementById("checkout").onclick=function(){document.getElementById("kp").style.display="none";document.getElementById("st").textContent="";lines();document.getElementById("dlg").showModal()};
 document.getElementById("close").onclick=function(){document.getElementById("dlg").close()};
 var io=window.IntersectionObserver?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.12}):null;
@@ -156,7 +156,7 @@ if(p.replace(/\D/g,"").length<10){st.textContent="Укажите телефон,
 st.textContent="Отправляем…";
 fetch("/.netlify/functions/order",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:n,phone:p,items:it})})
 .then(function(r){return r.json()}).then(function(d){if(d.ok){var tt=it.reduce(function(a,c){return a+c.price*c.q},0);st.textContent="Заказ принят! К оплате: "+fmt(tt)+". Оплатите в Kaspi, введя эту сумму, или у стойки.";document.getElementById("kp").style.display="inline-block";cart={};upd();document.getElementById("lines").innerHTML=""}else throw 0})
-.catch(function(){st.textContent="Не получилось отправить. Нажмите WhatsApp, и заказ уйдёт сообщением."})};
+.catch(function(){var t2=it.reduce(function(a,c){return a+c.price*c.q},0);st.textContent="Не получилось отправить автоматически. Нажмите WhatsApp, и заказ уйдёт сообщением. К оплате: "+fmt(t2)+".";document.getElementById("kp").style.display="inline-block"})};
 seasonRender();menuRender();
 </script>
 </body>
